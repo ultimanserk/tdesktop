@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # добавлено для ручного запуска
+  workflow_dispatch:
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
           python-version: '3.10'
 
       - name: Set up CMake
-        uses: lukka/get-cmake@v3  # Замена на рабочее действие
+        uses: lukka/get-cmake@v1  # Обновленная версия действия
         with:
           cmakeVersion: '3.21.0'  # Укажите нужную версию CMake
 
