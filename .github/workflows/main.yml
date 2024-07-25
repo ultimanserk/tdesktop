@@ -1,0 +1,41 @@
+name: Build Telegram Desktop
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Set up CMake
+        uses: twilio/cmake-action@v1.3
+
+      - name: Install Git
+        run: choco install git
+
+      - name: Install Qt
+        run: choco install qt5
+
+      - name: Clone and prepare source
+        run: |
+          git clone --recursive https://github.com/TDesktop-x64/tdesktop.git
+          cd tdesktop\Telegram\build
+          .\prepare\win.bat
+
+      - name: Configure
+        run: |
+          cd tdesktop\Telegram
+          .\configure.bat x64 -D TDESKTOP_API_ID=${{ secrets.TDESKTOP_API_ID }} -D TDESKTOP_API_HASH=${{ secrets.TDESKTOP_API_HASH }}
+
+      - name: Build
+        run: msbuild tdesktop\out\Telegram.sln /p:Configuration=Release
