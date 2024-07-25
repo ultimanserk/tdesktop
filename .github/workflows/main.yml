@@ -26,7 +26,8 @@ jobs:
         run: choco install git -y
 
       - name: Install Qt
-        run: choco install qt5 -y
+        run: |
+          choco install qt5 --version=5.15.13 -y || echo "If this fails, consider installing manually"
 
       - name: Clone and prepare source
         run: |
