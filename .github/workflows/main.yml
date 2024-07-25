@@ -25,10 +25,13 @@ jobs:
       - name: Install Git
         run: choco install git -y
 
+      - name: Download Qt Online Installer
+        run: |
+          Invoke-WebRequest -Uri "https://download.qt.io/official_releases/online_installers/qt-unified-windows-x86-4.0.1-online.exe" -OutFile qt-installer.exe
+
       - name: Install Qt
         run: |
-          Invoke-WebRequest -Uri "https://download.qt.io/official_releases/qt/5.15/5.15.13/qt-opensource-windows-x86-5.15.13.exe" -OutFile qt-installer.exe
-          Start-Process -FilePath qt-installer.exe -ArgumentList "/S" -Wait
+          Start-Process -FilePath qt-installer.exe -ArgumentList "--silent --accept-messages --no-replace --no-updates --no-login --default-setup --quiet --packages qt.qt5.5152.win32_msvc2019" -Wait
         shell: pwsh
 
       - name: Clone and prepare source
