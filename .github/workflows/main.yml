@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # добавьте эту строку для включения ручного запуска
+  workflow_dispatch:  # добавлено для ручного запуска
 
 jobs:
   build:
@@ -19,7 +19,9 @@ jobs:
           python-version: '3.10'
 
       - name: Set up CMake
-        uses: twilio/cmake-action@v1.3
+        uses: lukka/get-cmake@v3  # Замена на рабочее действие
+        with:
+          cmakeVersion: '3.21.0'  # Укажите нужную версию CMake
 
       - name: Install Git
         run: choco install git
@@ -40,4 +42,3 @@ jobs:
 
       - name: Build
         run: msbuild tdesktop\out\Telegram.sln /p:Configuration=Release
-
