@@ -18,16 +18,15 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Set up CMake
-        uses: lukka/get-cmake@v1  # Обновленная версия действия
-        with:
-          cmakeVersion: '3.21.0'  # Укажите нужную версию CMake
+      - name: Install CMake
+        run: |
+          choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
 
       - name: Install Git
-        run: choco install git
+        run: choco install git -y
 
       - name: Install Qt
-        run: choco install qt5
+        run: choco install qt5 -y
 
       - name: Clone and prepare source
         run: |
