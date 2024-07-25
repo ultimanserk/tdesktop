@@ -27,11 +27,11 @@ jobs:
 
       - name: Download Qt Online Installer
         run: |
-          Invoke-WebRequest -Uri "https://download.qt.io/official_releases/online_installers/qt-unified-windows-x86-4.0.1-online.exe" -OutFile qt-installer.exe
+          Invoke-WebRequest -Uri "https://download.qt.io/official_releases/online_installers/qt-unified-windows-x64-online.exe" -OutFile qt-installer.exe
 
       - name: Install Qt
         run: |
-          Start-Process -FilePath qt-installer.exe -ArgumentList "--silent --accept-messages --no-replace --no-updates --no-login --default-setup --quiet --packages qt.qt5.5152.win32_msvc2019" -Wait
+          Start-Process -FilePath qt-installer.exe -ArgumentList '--silent --accept-messages --no-replace --no-updates --default-setup --modules qt.qt5.5152.win32_msvc2019' -Wait
         shell: pwsh
 
       - name: Clone and prepare source
