@@ -27,7 +27,9 @@ jobs:
 
       - name: Install Qt
         run: |
-          choco install qt5 --version=5.15.13 -y || echo "If this fails, consider installing manually"
+          Invoke-WebRequest -Uri "https://download.qt.io/official_releases/qt/5.15/5.15.13/qt-opensource-windows-x86-5.15.13.exe" -OutFile qt-installer.exe
+          Start-Process -FilePath qt-installer.exe -ArgumentList "/S" -Wait
+        shell: pwsh
 
       - name: Clone and prepare source
         run: |
