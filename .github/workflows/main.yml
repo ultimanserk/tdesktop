@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:  # добавьте эту строку для включения ручного запуска
 
 jobs:
   build:
@@ -39,3 +40,4 @@ jobs:
 
       - name: Build
         run: msbuild tdesktop\out\Telegram.sln /p:Configuration=Release
+
