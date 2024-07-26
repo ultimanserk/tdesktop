@@ -31,7 +31,7 @@ jobs:
 
       - name: Install Qt
         run: |
-          Start-Process -FilePath qt-installer.exe -ArgumentList '--silent --accept-messages --no-replace --no-updates --default-setup --modules qt.qt5.5152.win32_msvc2019' -Wait
+          Start-Process -FilePath qt-installer.exe -ArgumentList '--silent --accept-messages --no-replace --no-updates --default-setup --modules qt.qt5.5152.win64_msvc2019' -Wait
         shell: pwsh
 
       - name: Clone and prepare source
