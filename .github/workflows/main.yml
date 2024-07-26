@@ -29,9 +29,20 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://download.qt.io/official_releases/online_installers/qt-unified-windows-x64-online.exe" -OutFile qt-installer.exe
 
+      - name: Create Qt install script
+        run: |
+          echo var installer = new QInstaller(); > qt-install-script.qs
+          echo var components = ["qt.qt5.5152.win64_msvc2019"]; >> qt-install-script.qs
+          echo installer.setValue("components", components); >> qt-install-script.qs
+          echo installer.setValue("installationPath", "C:/Qt/Qt5.15.2"); >> qt-install-script.qs
+          echo installer.setValue("autoAccept", true); >> qt-install-script.qs
+          echo installer.setValue("acceptLicense", true); >> qt-install-script.qs
+          echo installer.setValue("skipUpdate", true); >> qt-install-script.qs
+          echo installer.install(); >> qt-install-script.qs
+
       - name: Install Qt
         run: |
-          ./qt-installer.exe --script qt-install-script.qs
+          Start-Process -FilePath qt-installer.exe -ArgumentList '--script qt-install-script.qs' -Wait
         shell: pwsh
 
       - name: Clone and prepare source
