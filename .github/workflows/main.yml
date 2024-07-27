@@ -28,10 +28,10 @@ jobs:
           choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --includeOptional --passive" -y
 
       - name: Set up MSVC environment
-        shell: cmd
         run: |
-          "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          set
+          $env:INCLUDE = "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\<version>\include;C:\Program Files (x86)\Windows Kits\10\Include\<sdk_version>\ucrt"
+          $env:LIB = "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\<version>\lib\x64;C:\Program Files (x86)\Windows Kits\10\Lib\<sdk_version>\ucrt\x64"
+          $env:PATH = "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\<version>\bin\Hostx64\x64;$env:PATH"
 
       - name: Download Qt Online Installer
         run: |
