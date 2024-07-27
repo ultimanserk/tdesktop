@@ -31,14 +31,14 @@ jobs:
 
       - name: Create Qt install script
         run: |
-          echo var installer = new QInstaller(); > qt-install-script.qs
-          echo var components = ["qt.qt5.5152.win64_msvc2019"]; >> qt-install-script.qs
-          echo installer.setValue("components", components); >> qt-install-script.qs
-          echo installer.setValue("installationPath", "C:/Qt/Qt5.15.2"); >> qt-install-script.qs
-          echo installer.setValue("autoAccept", true); >> qt-install-script.qs
-          echo installer.setValue("acceptLicense", true); >> qt-install-script.qs
-          echo installer.setValue("skipUpdate", true); >> qt-install-script.qs
-          echo installer.install(); >> qt-install-script.qs
+          Set-Content -Path qt-install-script.qs -Value 'var installer = new QInstaller();'
+          Add-Content -Path qt-install-script.qs -Value 'var components = ["qt.qt5.5152.win64_msvc2019"];'
+          Add-Content -Path qt-install-script.qs -Value 'installer.setValue("components", components);'
+          Add-Content -Path qt-install-script.qs -Value 'installer.setValue("installationPath", "C:/Qt/Qt5.15.2");'
+          Add-Content -Path qt-install-script.qs -Value 'installer.setValue("autoAccept", true);'
+          Add-Content -Path qt-install-script.qs -Value 'installer.setValue("acceptLicense", true);'
+          Add-Content -Path qt-install-script.qs -Value 'installer.setValue("skipUpdate", true);'
+          Add-Content -Path qt-install-script.qs -Value 'installer.install();'
 
       - name: Install Qt
         run: |
