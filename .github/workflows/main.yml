@@ -18,18 +18,18 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install CMake and Git
+      - name: Install CMake, Git, and VSWhere
         run: |
           choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' -y
           choco install git -y
           choco install vswhere -y
 
       - name: Set up MSVC environment
+        shell: cmd
         run: |
-          $vsPath = & 'C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe' -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
-          $env:INCLUDE = "$vsPath\VC\Tools\MSVC\<version>\include;$vsPath\VC\Auxiliary\VS\include;$vsPath\VC\Tools\MSVC\<version>\atlmfc\include;$vsPath\VC\Auxiliary\VS\UnitTest\include;$vsPath\VC\Auxiliary\VS\UI\include;C:\Program Files (x86)\Windows Kits\10\Include\<sdk_version>\ucrt;$env:INCLUDE"
-          $env:LIB = "$vsPath\VC\Tools\MSVC\<version>\lib\x64;$vsPath\VC\Auxiliary\VS\lib\x64;$vsPath\VC\Tools\MSVC\<version>\atlmfc\lib\x64;$vsPath\VC\Auxiliary\VS\UI\lib\x64;C:\Program Files (x86)\Windows Kits\10\Lib\<sdk_version>\ucrt\x64;$env:LIB"
-          $env:PATH = "$vsPath\VC\Tools\MSVC\<version>\bin\Hostx64\x64;$vsPath\Common7\Tools;$vsPath\Common7\IDE\VC\VCPackages;$vsPath\VC\Tools\MSVC\<version>\bin\Hostx64\x86;$vsPath\Common7\IDE\CommonExtensions\Microsoft\TestWindow;$vsPath\Team Tools\Performance Tools;C:\Program Files (x86)\Microsoft SDKs\F#\10.1\Framework\v4.7.1;C:\Program Files (x86)\Windows Kits\10\bin\x64;$env:PATH"
+          for /f "delims=" %%i in ('vswhere -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath') do set VSINSTALLDIR=%%i
+          call "%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat"
+          set
 
       - name: Download Qt Online Installer
         run: |
